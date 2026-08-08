@@ -5,239 +5,51 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>中古機械・周辺機器 在庫一覧 | 大源商会</title>
     <style>
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-        }
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            background-color: #f4f6f9;
-            color: #333;
-            line-height: 1.6;
-            padding: 20px 10px;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-        }
-        h1 {
-            font-size: 1.8rem;
-            margin-bottom: 20px;
-            color: #1a365d;
-            border-bottom: 3px solid #2b6cb0;
-            padding-bottom: 8px;
-        }
-        .filter-container {
-            background: #fff;
-            padding: 15px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
-            margin-bottom: 25px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            flex-wrap: wrap;
-        }
-        .filter-label {
-            font-weight: bold;
-            color: #4a5568;
-        }
-        .filter-btn {
-            background: #edf2f7;
-            border: none;
-            padding: 8px 16px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 0.95rem;
-            color: #4a5568;
-            transition: all 0.2s ease;
-        }
-        .filter-btn:hover {
-            background: #e2e8f0;
-        }
-        .filter-btn.active {
-            background: #2b6cb0;
-            color: #fff;
-            font-weight: bold;
-        }
-        .machine-grid {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 20px;
-        }
-        .machine-card {
-            background: #fff;
-            border-radius: 10px;
-            overflow: hidden;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
-            display: flex;
-            flex-direction: column;
-            border: 1px solid #e2e8f0;
-        }
-        @media (min-width: 768px) {
-            .machine-card {
-                flex-direction: row;
-            }
-        }
-        .card-image-area {
-            width: 100%;
-            background: #f7fafc;
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
-        @media (min-width: 768px) {
-            .card-image-area {
-                width: 380px;
-                flex-shrink: 0;
-            }
-        }
-        .main-img-wrapper {
-            width: 100%;
-            height: 250px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            position: relative;
-            overflow: hidden;
-            border-radius: 6px;
-            background: #e2e8f0;
-        }
-        .main-img {
-            max-width: 100%;
-            max-height: 100%;
-            object-fit: contain;
-            transition: transform 0.2s ease;
-        }
-        .main-img-wrapper:hover .main-img {
-            transform: scale(1.03);
-        }
-        .zoom-hint {
-            position: absolute;
-            bottom: 6px;
-            right: 6px;
-            background: rgba(0,0,0,0.6);
-            color: #fff;
-            font-size: 0.75rem;
-            padding: 3px 8px;
-            border-radius: 4px;
-            pointer-events: none;
-        }
-        .thumb-list {
-            display: flex;
-            gap: 8px;
-            margin-top: 10px;
-            width: 100%;
-            overflow-x: auto;
-            padding-bottom: 5px;
-        }
-        .thumb-img {
-            width: 50px;
-            height: 50px;
-            object-fit: cover;
-            border-radius: 4px;
-            cursor: pointer;
-            border: 2px solid transparent;
-            opacity: 0.7;
-            transition: all 0.2s ease;
-        }
-        .thumb-img:hover, .thumb-img.active {
-            opacity: 1;
-            border-color: #2b6cb0;
-        }
-        .card-info-area {
-            padding: 20px;
-            flex-grow: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-        .category-badge {
-            display: inline-block;
-            background: #2b6cb0;
-            color: #fff;
-            font-size: 0.8rem;
-            padding: 3px 10px;
-            border-radius: 12px;
-            font-weight: bold;
-            margin-bottom: 8px;
-            width: fit-content;
-        }
-        .machine-name {
-            font-size: 1.3rem;
-            font-weight: bold;
-            color: #1a202c;
-            margin-bottom: 12px;
-        }
-        .spec-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 15px;
-        }
-        .spec-table th, .spec-table td {
-            padding: 6px 10px;
-            text-align: left;
-            font-size: 0.95rem;
-            border-bottom: 1px solid #edf2f7;
-        }
-        .spec-table th {
-            width: 90px;
-            color: #718096;
-            font-weight: normal;
-            background-color: #f7fafc;
-        }
-        .price-tag {
-            font-size: 1.2rem;
-            font-weight: bold;
-            color: #e53e3e;
-        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; background-color: #f4f6f9; color: #333; line-height: 1.6; padding: 20px 10px; }
+        .container { max-width: 1200px; margin: 0 auto; }
+        h1 { font-size: 1.8rem; margin-bottom: 20px; color: #1a365d; border-bottom: 3px solid #2b6cb0; padding-bottom: 8px; }
+        .filter-container { background: #fff; padding: 15px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); margin-bottom: 25px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+        .filter-label { font-weight: bold; color: #4a5568; }
+        .filter-btn { background: #edf2f7; border: none; padding: 8px 16px; border-radius: 20px; cursor: pointer; font-size: 0.95rem; color: #4a5568; }
+        .filter-btn.active { background: #2b6cb0; color: #fff; font-weight: bold; }
+        .machine-grid { display: grid; grid-template-columns: 1fr; gap: 20px; }
+        .machine-card { background: #fff; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 6px rgba(0,0,0,0.05); display: flex; flex-direction: column; border: 1px solid #e2e8f0; }
+        @media (min-width: 768px) { .machine-card { flex-direction: row; } }
+        .card-image-area { width: 100%; background: #f7fafc; padding: 15px; display: flex; flex-direction: column; align-items: center; justify-content: center; }
+        @media (min-width: 768px) { .card-image-area { width: 380px; flex-shrink: 0; } }
+        .main-img-wrapper { width: 100%; height: 250px; display: flex; align-items: center; justify-content: center; cursor: pointer; position: relative; overflow: hidden; border-radius: 6px; background: #e2e8f0; }
+        .main-img { max-width: 100%; max-height: 100%; object-fit: contain; }
+        .zoom-hint { position: absolute; bottom: 6px; right: 6px; background: rgba(0,0,0,0.6); color: #fff; font-size: 0.75rem; padding: 3px 8px; border-radius: 4px; pointer-events: none; }
+        .thumb-list { display: flex; gap: 8px; margin-top: 10px; width: 100%; overflow-x: auto; padding-bottom: 5px; }
+        .thumb-img { width: 50px; height: 50px; object-fit: cover; border-radius: 4px; cursor: pointer; border: 2px solid transparent; opacity: 0.7; }
+        .thumb-img.active { opacity: 1; border-color: #2b6cb0; }
+        .card-info-area { padding: 20px; flex-grow: 1; display: flex; flex-direction: column; justify-content: space-between; }
+        .category-badge { display: inline-block; background: #2b6cb0; color: #fff; font-size: 0.8rem; padding: 3px 10px; border-radius: 12px; font-weight: bold; margin-bottom: 8px; width: fit-content; }
+        .machine-name { font-size: 1.3rem; font-weight: bold; color: #1a202c; margin-bottom: 12px; }
+        .spec-table { width: 100%; border-collapse: collapse; margin-bottom: 15px; }
+        .spec-table th, .spec-table td { padding: 6px 10px; text-align: left; font-size: 0.95rem; border-bottom: 1px solid #edf2f7; }
+        .spec-table th { width: 90px; color: #718096; font-weight: normal; background-color: #f7fafc; }
+        .price-tag { font-size: 1.2rem; font-weight: bold; color: #e53e3e; }
 
-        /* 拡大表示（モーダル）のスタイル（大画面・くっきり表示設定） */
-        .modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.95);
-            z-index: 9999;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
+        /* 全画面ド迫力表示＋ボケ防止補正（最高画質） */
+        .modal-overlay { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.95); z-index: 9999; justify-content: center; align-items: center; cursor: pointer; }
+        .modal-overlay.active { display: flex; }
+        .modal-overlay img { 
+            width: 98vw; 
+            height: 98vh; 
+            object-fit: contain; 
+            image-rendering: -webkit-optimize-contrast; 
+            image-rendering: crisp-edges;
+            filter: contrast(102%);
         }
-        .modal-overlay.active {
-            display: flex;
-        }
-        .modal-overlay img {
-            max-width: 98vw;
-            max-height: 98vh;
-            width: auto;
-            height: auto;
-            object-fit: contain;
-            border-radius: 6px;
-            box-shadow: 0 5px 25px rgba(0,0,0,0.8);
-        }
-        .modal-close {
-            position: absolute;
-            top: 15px;
-            right: 25px;
-            color: #fff;
-            font-size: 35px;
-            font-weight: bold;
-            cursor: pointer;
-        }
+        .modal-close { position: fixed; top: 15px; right: 25px; color: #fff; font-size: 45px; font-weight: bold; cursor: pointer; z-index: 10000; text-shadow: 0 0 10px rgba(0,0,0,0.8); }
     </style>
 </head>
 <body>
 
 <div class="container">
     <h1>中古機械・周辺機器 在庫一覧</h1>
-
     <div class="filter-container">
         <span class="filter-label">カテゴリー：</span>
         <button class="filter-btn active" onclick="filterCategory('すべて')">すべて</button>
@@ -246,13 +58,9 @@
         <button class="filter-btn" onclick="filterCategory('周辺機器')">周辺機器</button>
         <button class="filter-btn" onclick="filterCategory('その他')">その他</button>
     </div>
-
-    <div id="machineList" class="machine-grid">
-        <!-- JavaScriptで自動描画されます -->
-    </div>
+    <div id="machineList" class="machine-grid"></div>
 </div>
 
-<!-- 画像拡大用モーダル -->
 <div id="imgModal" class="modal-overlay" onclick="closeModal()">
     <span class="modal-close">&times;</span>
     <img id="modalImg" src="">
@@ -267,10 +75,7 @@
     function renderList() {
         const container = document.getElementById("machineList");
         container.innerHTML = "";
-
-        const filtered = currentCategory === "すべて"
-            ? rawData
-            : rawData.filter(item => item.category === currentCategory);
+        const filtered = currentCategory === "すべて" ? rawData : rawData.filter(item => item.category === currentCategory);
 
         if (filtered.length === 0) {
             container.innerHTML = "<p style='text-align:center; color:#888; padding: 40px;'>現在表示できる機械情報がありません。</p>";
@@ -285,8 +90,7 @@
             if (validImgs.length > 1) {
                 thumbsHtml = `<div class="thumb-list">` + 
                     validImgs.map((img, idx) => `
-                        <img src="${img}" class="thumb-img ${idx === 0 ? 'active' : ''}" 
-                             onclick="changeMainImg(this, 'main-${item.id}')">
+                        <img src="${img}" class="thumb-img ${idx === 0 ? 'active' : ''}" onclick="changeMainImg(this, 'main-${item.id}')">
                     `).join('') + `</div>`;
             }
 
@@ -320,26 +124,16 @@
 
     function changeMainImg(thumbElem, mainImgId) {
         const mainImg = document.getElementById(mainImgId);
-        if (mainImg) {
-            mainImg.src = thumbElem.src;
-        }
-        const thumbContainer = thumbElem.parentElement;
-        const thumbs = thumbContainer.getElementsByClassName("thumb-img");
-        for (let t of thumbs) {
-            t.classList.remove("active");
-        }
+        if (mainImg) mainImg.src = thumbElem.src;
+        const thumbs = thumbElem.parentElement.getElementsByClassName("thumb-img");
+        for (let t of thumbs) t.classList.remove("active");
         thumbElem.classList.add("active");
     }
 
     function filterCategory(cat) {
         currentCategory = cat;
-        const btns = document.querySelectorAll(".filter-btn");
-        btns.forEach(btn => {
-            if (btn.innerText === cat) {
-                btn.classList.add("active");
-            } else {
-                btn.classList.remove("active");
-            }
+        document.querySelectorAll(".filter-btn").forEach(btn => {
+            btn.classList.toggle("active", btn.innerText === cat);
         });
         renderList();
     }
@@ -356,9 +150,7 @@
         document.getElementById("imgModal").classList.remove("active");
     }
 
-    // 初回表示
     renderList();
 </script>
-
 </body>
 </html>
